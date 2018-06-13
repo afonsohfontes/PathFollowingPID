@@ -1,6 +1,6 @@
 # PathFollowingPID
 
-TEXTO ESCRITO POR: @JorgeRenan
+TEXTO ESCRITO POR: Jorge Renan
 
 # 1. INTRODUÇÃO
 

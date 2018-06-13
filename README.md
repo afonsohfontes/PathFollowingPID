@@ -16,8 +16,11 @@ O objetivo deste trabalho é desenvolver um sistema de controladores que possam 
 
 # 1.2. Objetivos Específicos
 •	Desenvolver um controlador para trajetória reta;
+
 •	Desenvolver um controlador para curvas;
+
 •	Realizar testes nos controladores;
+
 •	Demonstrar a eficiência dos controladores em diferentes trajetórias.
 
 # 2. METODOLOGIA
@@ -108,19 +111,19 @@ Esse desenvolvimento matemático trata-se de uma simples conversão da distânci
 
 Passo 1: Calcular o comprimento da circunferência do pneu utilizado pelo robô:
 
-                                           C=Ꝋ* π                                    (1)
+                                           C = Ꝋ * π                                    (1)
 
 Na formula acima, C é o comprimento da circunferência, Ꝋ é o diâmetro do pneu e π é o número pi que tem o valor aproximado de 3,1416. Neste trabalho utilizou-se um pneu com diâmetro de 68 mm, logo o comprimento da circunferência será de 213,629 mm.  
 
 Passo 2: Calcular a resolução do encoder. Para esse procedimento, se faz necessário a utilização do Arduino UNO juntamente com o encoder, pois percorrerá a distância do comprimento do pneu e acompanhará quantos pulsos o encoder gera até atingir a tal distância dada. Após isso poderá aplicar na formula a seguir:
 
-                                            D=C/N                                                  (2)
+                                            D = C/N                                      (2)
 
 Onde D é a distância percorrida em milimetro (mm) pelo robô a cada um pulso do encoder, C é o mesmo comprimento calculado no passo anterior e N é a quantidade de pulsos que o encoder gerou até chegar ao final da distância definida. No presente trabalho utilizou o comprimento da roda para a contagem dos pulsos que teve como resultado 12 pulsos gerados pelo encoder. Então a resolução do encoder aqui utilizado é de 17,8 mm por pulso.
 
 Passo 3: Calcular a conversão da distância real em quantidade de pulsos necessária para que seja possível atingir a distância desejada. Para isso acontecer se pede que forneça a distância real em milimetro (mm) devido todos os passos anteriores utilizarem essa unidade métrica, aplicando assim a seguinte formula:
  
-                                           P=  d/D                                         (3)
+                                           P =  d/D                                      (3)
 
 Em que d é a distância em milimetro (mm) fornecida pelo usuário e P é a quantidade de pulsos que equivale a distância real. Portanto para o nosso trabalho qualquer conversão de distância real será divida pelo valor de 17,8 mm por pulso para que assim se tenha a quantidade de pulsos necessária para atingir a distância real.
 
@@ -128,8 +131,8 @@ Em que d é a distância em milimetro (mm) fornecida pelo usuário e P é a quan
 
 O objetivo deste controlador é de fornecer parâmetros de controle para o acionamento dos motores e assim possam reduzir gradativamente a zero os erros de posição e orientação do robô. A função que aciona os motores transforma os parâmetros recebido pelo controlador em sinais de PWM que serão enviados para cada motor. O sinal de controle é regido pelo o uso das seguintes equações:
 
-                        x=constante-output                                       (4)
-                        y=constante+output                                       (5)
+                               x = constante - output                                    (4)
+                               y = constante + output                                    (5)
 
 Onde x e y são as velocidades que os motores da direita e esquerda irão receber, respectivamente, constante é a saída do controlador do encoder e output é a saída do controlador do módulo MPU6050. 
  
@@ -201,8 +204,8 @@ Nas linhas 41 e 42 ocorre a junção entre as saídas dos dois controladores PID
 
 O objetivo deste controlador é garantir com que o robô mude de direção para a esquerda ou direita a partir da indicação do ângulo. Existem duas funções que acionam os motores, pois cada uma tem um sentido especifico a cumprir. As equações utilizadas no sinal de controle são as seguintes:
 
-                                     y=pidc                                         (6)
-                                     x= -pidc                                       (7)
+                                     y = pidc                                        (6)
+                                     x = -pidc                                       (7)
 
 Onde x e y ainda continuam sendo as velocidades que os motores irão receber, porém serão definidas pela saída do controlador PID, pidc. Neste controlador usa-se apenas os dados do módulo de localização. Logo, torna o algoritmo dele simples de ser implementado. Na Figura 11 é ilustrado a programação do controlador de curvas.
 
